@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, HttpCode, HttpStatus, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, HttpCode, HttpStatus, ValidationPipe, Put } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrderResponseDto } from './dto/order-response.dto';
@@ -26,7 +26,7 @@ export class OrdersController {
     return this.ordersService.create(createOrderDto);
   }
 
-  @Post(':id/advance')
+  @Put(':id/advance')
   @HttpCode(HttpStatus.OK)
   async advance(@Param('id') id: string): Promise<OrderResponseDto> {
     return this.ordersService.advanceStatus(id);
