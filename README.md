@@ -1,91 +1,73 @@
-# 🧪 OlaClick Backend Challenge - NestJS Edition
+# 📦 Restaurant Orders API
 
-## 🎯 Objetivo
-
-Diseñar e implementar una API RESTful que gestione órdenes de un restaurante utilizando el stack:
-
-- **Node.js + TypeScript**
-- **NestJS (arquitectura modular y principios SOLID)**
-- **Sequelize (ORM)**
-- **PostgreSQL** como base de datos
-- **Redis** para cache
-- **Docker** para contenerización
+API desarrollada en **NestJS** para gestionar órdenes de restaurante, incluyendo creación, consulta, actualización de estado y documentación con Swagger.
 
 ---
 
-## 📌 Requerimientos Funcionales
+## 🚀 Inicio Rápido
 
-### 1. Listar todas las órdenes
-- Endpoint: `GET /orders`
-- Devuelve todas las órdenes con estado diferente de `delivered`.
-- Resultado cacheado en **Redis** por 30 segundos.
+### 🔧 Construir los contenedores
+```bash
+docker compose build --no-cache
+▶️ Ejecutar la aplicación
+bash
 
-### 2. Crear una nueva orden
-- Endpoint: `POST /orders`
-- Inserta una nueva orden en estado `initiated`.
-- Estructura esperada:
-  ```json
-  {
-    "clientName": "Ana López",
+docker compose up
+La API estará disponible en:
+
+
+http://localhost:3000
+📘 Documentación Swagger
+La API incluye documentación interactiva generada con Swagger UI.
+
+👉 Accede a:
+
+bash
+Copiar código
+http://localhost:3000/api
+Aquí podrás probar todos los endpoints sin necesidad de Postman o curl.
+
+🧪 Ejemplos de uso con cURL
+(Puedes importarlos directamente en Postman)
+
+🔍 Obtener una orden por ID
+
+curl --location --request GET 'http://127.0.0.1:3000/orders/62573357-16a3-43d4-95fc-a8dd7b748fbf'
+➕ Crear una nueva orden
+
+curl -X POST http://127.0.0.1:3000/orders \
+  -H "Content-Type: application/json" \
+  -d '{
+    "clientName": "Juan Perez",
     "items": [
-      { "description": "Ceviche", "quantity": 2, "unitPrice": 50 },
-      { "description": "Chicha morada", "quantity": 1, "unitPrice": 10 }
+      {
+        "description": "Hamburguesa",
+        "quantity": 2,
+        "unitPrice": 15000
+      },
+      {
+        "description": "Gaseosa",
+        "quantity": 1,
+        "unitPrice": 5000
+      }
     ]
-  }
+  }'
+🔄 Avanzar el estado de una orden
 
-### 3. Avanzar estado de una orden
-Endpoint: `POST /orders/:id/advance`
+curl -X PUT "http://127.0.0.1:3000/orders/dc22f1d5-aece-4a0b-ab45-91de9cc0dec4/advance" \
+  -H "Content-Type: application/json"
+📂 Estructura del Proyecto
+/src/orders — Controladores, servicios y entidades de órdenes
 
-Progreso del estado:
+/src/common — Filtros, interceptores y utilidades
 
-`initiated → sent → delivered`
+/docker-compose.yml — Orquestación de la API + Postgres
 
-Si llega a `delivered`, debe eliminarse de la base de datos y del caché.
+/api — Documentación Swagger
 
-### 4. Ver detalle de una orden
-Endpoint: `GET /orders/:id`
+🧰 Requisitos
+Docker
 
-Muestra la orden con todos sus detalles e items.
+Docker Compose
 
-### 🧱 Consideraciones Técnicas
-- Estructura modular con NestJS (modules, controllers, services, repositories)
-- Uso de principios SOLID
-- ORM: Sequelize con PostgreSQL
-- Uso de DTOs y Pipes para validaciones
-- Integración con Redis para cache de consultas
-- Manejo de errores estructurado (filtros de excepción, status codes)
-- Contenerización con Docker
-- Al menos una prueba automatizada con Jest (e2e o unit test)
-
-### 📦 Estructura sugerida
-```
-src/
-├── orders/
-│   ├── dto/
-│   ├── entities/
-│   ├── orders.controller.ts
-│   ├── orders.service.ts
-│   ├── orders.module.ts
-├── app.module.ts
-├── main.ts
-```
-
-### 📘 Extras valorados
-- Uso de interceptors para logging o transformación de respuestas
-- Jobs con `@nestjs/schedule` para depuración de órdenes antiguas (bonus)
-- Uso de ConfigModule para manejar variables de entorno
-
-### 🚀 Entrega
-1. Haz un fork de este repositorio (o crea uno nuevo).
-2. Implementa tu solución y enviala con un push o enviandonos el enlace del repositorio publico.
-3. Incluye un README.md con:
-- Instrucciones para correr con docker o docker-compose
-- Cómo probar endpoints (Postman, Swagger, cURL)
-- Consideraciones técnicas
-
-❓ Preguntas adicionales 
-- ¿Cómo desacoplarías la lógica de negocio del framework NestJS?
-- ¿Cómo escalarías esta API para soportar miles de órdenes concurrentes?
-- ¿Qué ventajas ofrece Redis en este caso y qué alternativas considerarías?
-
-¡Buena suerte y disfruta el reto! 🚀
+No necesitas instalar Node.js ni NestJS localmente.
