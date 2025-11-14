@@ -31,7 +31,7 @@ Aquí podrás probar todos los endpoints sin necesidad de Postman o curl.
 (Puedes importarlos directamente en Postman)
 
 🔍 Obtener una orden por ID
-
+---
 curl --location --request GET 'http://127.0.0.1:3000/orders/62573357-16a3-43d4-95fc-a8dd7b748fbf'
 ➕ Crear una nueva orden
 
@@ -52,10 +52,14 @@ curl -X POST http://127.0.0.1:3000/orders \
       }
     ]
   }'
-🔄 Avanzar el estado de una orden
+---
+--- Avanzar el estado de una orden
 
 curl -X PUT "http://127.0.0.1:3000/orders/dc22f1d5-aece-4a0b-ab45-91de9cc0dec4/advance" \
   -H "Content-Type: application/json"
+
+---
+
 📂 Estructura del Proyecto
 /src/orders — Controladores, servicios y entidades de órdenes
 
